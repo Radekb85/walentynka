@@ -200,18 +200,13 @@ document.addEventListener("click", (e) => {
         alert("💌 Tajna wiadomość: Od 3 września 2025 wszystko ma sens ❤️");
     }
 });
-
-/* KLIKNIĘCIE TAK */
-yes.addEventListener("click", () => {
-    loveScreen.style.display = "flex";
-});
-
+const counter = document.getElementById("counter");
 const startDate = new Date(2025, 8, 3); // 3 września 2025
 
 function updateCounter() {
     const now = new Date();
-    const diff = startDate - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    const diff = startDate - now; // ms
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // pełne dni
 
     if (days > 0) {
         counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
@@ -220,12 +215,22 @@ function updateCounter() {
     }
 }
 
-updateCounter();
-setInterval(updateCounter, 60000);
+window.onload = function() {
+    updateCounter();
+    setInterval(updateCounter, 60000); // aktualizacja co minutę
+
+/* KLIKNIĘCIE TAK */
+yes.addEventListener("click", () => {
+    loveScreen.style.display = "flex";
+});
+
+
+}
 </script>
 
 </body>
 </html>
+
 
 
 
