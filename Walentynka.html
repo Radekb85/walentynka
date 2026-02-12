@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>💖 Walentynka 💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 40px;
+    color: #b30000;
+    animation: pulse 2s infinite;
+    text-align: center;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.buttons {
+    z-index: 5;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 22px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#yes {
+    background: red;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+#no {
+    background: #555;
+    color: white;
+}
+
+#comments {
+    margin-top: 25px;
+    font-size: 20px;
+    color: darkred;
+    min-height: 30px;
+    text-align: center;
+}
+
+/* EKRAN KOCHAM CIĘ */
+#loveScreen {
+    position: fixed;
+    inset: 0;
+    background: red;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
+    color: white;
+    z-index: 20;
+    text-align: center;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* SERDUSZKA */
+.heart {
+    position: fixed;
+    top: -20px;
+    font-size: 24px;
+    animation: fall linear forwards;
+    color: red;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Czy zostaniesz moją walentynką? ❤️</h1>
+
+<div class="buttons">
+    <button id="yes">TAK</button>
+    <button id="no">NIE</button>
+</div>
+
+<div id="comments"></div>
+
+<div id="loveScreen">
+    Kocham cię ;* ❤️
+</div>
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const comments = document.getElementById("comments");
+const loveScreen = document.getElementById("loveScreen");
+
+let scale = 1;
+let index = 0;
+
+const texts = [
+    "czy jesteś pewna?",
+    "bądź moją walentynką no",
+    "PAULINA!!!",
+    "nie masz wyjścia ;*"
+];
+
+no.addEventListener("click", () => {
+    scale += 0.3;
+    yes.style.transform = `scale(${scale})`;
+
+    comments.innerText = texts[index];
+    index = (index + 1) % texts.length;
+
+    if (scale > 7) {
+        yes.style.position = "fixed";
+        yes.style.top = 0;
+        yes.style.left = 0;
+        yes.style.width = "100%";
+        yes.style.height = "100%";
+        yes.style.fontSize = "60px";
+    }
+});
+
+yes.addEventListener("click", () => {
+    loveScreen.style.display = "flex";
+});
+
+/* SERDUSZKA */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
