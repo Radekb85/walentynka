@@ -9,19 +9,19 @@ body {
     margin: 0;
     height: 100vh;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'Arial', sans-serif;
     overflow: hidden;
+    text-align: center;
 }
 
 h1 {
-    font-size: 40px;
+    font-size: clamp(28px, 5vw, 42px);
     color: #b30000;
     animation: pulse 2s infinite;
-    text-align: center;
 }
 
 @keyframes pulse {
@@ -31,14 +31,15 @@ h1 {
 }
 
 .buttons {
+    position: relative;
     z-index: 5;
 }
 
 button {
-    padding: 15px 35px;
-    font-size: 22px;
+    padding: 20px 40px;
+    font-size: 24px;
     border: none;
-    border-radius: 12px;
+    border-radius: 15px;
     cursor: pointer;
     margin: 10px;
 }
@@ -46,56 +47,53 @@ button {
 #yes {
     background: red;
     color: white;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
 }
 
 #no {
     background: #555;
     color: white;
+    position: absolute;
 }
 
 #comments {
-    margin-top: 25px;
+    margin-top: 20px;
     font-size: 20px;
     color: darkred;
     min-height: 30px;
-    text-align: center;
 }
 
-/* EKRAN KOCHAM CIĘ */
+/* Licznik */
+#counter {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #800000;
+}
+
+/* Ekran KOCHAM CIĘ */
 #loveScreen {
     position: fixed;
     inset: 0;
     background: red;
+    color: white;
     display: none;
     justify-content: center;
     align-items: center;
-    font-size: 70px;
-    color: white;
+    font-size: clamp(40px, 8vw, 80px);
     z-index: 20;
-    text-align: center;
-    animation: fadeIn 1s forwards;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* SERDUSZKA */
+/* Serduszka */
 .heart {
     position: fixed;
-    top: -20px;
     font-size: 24px;
-    animation: fall linear forwards;
-    color: red;
+    animation: fly 1.5s forwards;
+    pointer-events: none;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
+@keyframes fly {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-150px) scale(2); opacity: 0; }
 }
 </style>
 </head>
@@ -110,19 +108,16 @@ button {
 </div>
 
 <div id="comments"></div>
+<div id="counter"></div>
 
-<div id="loveScreen">
-    Kocham cię ;* ❤️
-</div>
+<div id="loveScreen">Kocham cię ;* ❤️</div>
 
 <script>
 const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 const comments = document.getElementById("comments");
 const loveScreen = document.getElementById("loveScreen");
-
-let scale = 1;
-let index = 0;
+const counter = document.getElementById("counter");
 
 const texts = [
     "czy jesteś pewna?",
@@ -131,44 +126,58 @@ const texts = [
     "nie masz wyjścia ;*"
 ];
 
-no.addEventListener("click", () => {
-    scale += 0.3;
-    yes.style.transform = `scale(${scale})`;
+let commentIndex = 0;
+let easterClicks = 0;
 
-    comments.innerText = texts[index];
-    index = (index + 1) % texts.length;
+/* UCIEKAJĄCY PRZYCISK NIE */
+no.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 80);
+    no.style.left = x + "px";
+    no.style.top = y + "px";
 
-    if (scale > 7) {
-        yes.style.position = "fixed";
-        yes.style.top = 0;
-        yes.style.left = 0;
-        yes.style.width = "100%";
-        yes.style.height = "100%";
-        yes.style.fontSize = "60px";
+    comments.innerText = texts[commentIndex];
+    commentIndex = (commentIndex + 1) % texts.length;
+});
+
+/* SERDUSZKA PO KLIKNIĘCIU */
+document.addEventListener("click", (e) => {
+    for (let i = 0; i < 5; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = e.clientX + Math.random()*20 - 10 + "px";
+        heart.style.top = e.clientY + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1500);
+    }
+
+    easterClicks++;
+    if (easterClicks === 15) {
+        alert("💌 Tajna wiadomość: Jesteś najlepszą rzeczą, jaka mi się przydarzyła.");
     }
 });
 
+/* KOCHAM CIĘ */
 yes.addEventListener("click", () => {
     loveScreen.style.display = "flex";
 });
 
-/* SERDUSZKA */
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerText = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-    document.body.appendChild(heart);
+/* LICZNIK CZASU RAZEM */
+const startDate = new Date("2024-02-14");
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    counter.innerText = `Jesteśmy razem od ${days} dni ❤️`;
 }
 
-setInterval(createHeart, 300);
+updateCounter();
+setInterval(updateCounter, 60000);
 </script>
 
 </body>
-
 </html>
