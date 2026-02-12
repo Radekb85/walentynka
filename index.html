@@ -155,68 +155,79 @@ button {
 </div>
 
 <script>
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
-const comments = document.getElementById("comments");
-const loveScreen = document.getElementById("loveScreen");
-const counter = document.getElementById("counter");
+window.onload = function() {
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const comments = document.getElementById("comments");
+    const loveScreen = document.getElementById("loveScreen");
+    const counter = document.getElementById("counter");
 
-const texts = [
-    "czy jesteś pewna?",
-    "bądź moją walentynką no",
-    "PAULINA!!!",
-    "nie masz wyjścia ;*"
-];
+    const texts = [
+        "czy jesteś pewna?",
+        "bądź moją walentynką no",
+        "PAULINA!!!",
+        "nie masz wyjścia ;*"
+    ];
 
-let commentIndex = 0;
-let easterClicks = 0;
+    let commentIndex = 0;
+    let easterClicks = 0;
 
-/* UCIEKAJĄCY PRZYCISK NIE */
-no.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 150);
-    const y = Math.random() * (window.innerHeight - 80);
-    no.style.left = x + "px";
-    no.style.top = y + "px";
+    /* UCIEKAJĄCY PRZYCISK NIE */
+    no.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 80);
+        no.style.left = x + "px";
+        no.style.top = y + "px";
 
-    comments.innerText = texts[commentIndex];
-    commentIndex = (commentIndex + 1) % texts.length;
-});
+        comments.innerText = texts[commentIndex];
+        commentIndex = (commentIndex + 1) % texts.length;
+    });
 
-/* SERDUSZKA PO KLIKNIĘCIU */
-document.addEventListener("click", (e) => {
-    for (let i = 0; i < 5; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "❤️";
-        heart.style.left = e.clientX + Math.random()*20 - 10 + "px";
-        heart.style.top = e.clientY + "px";
-        document.body.appendChild(heart);
+    /* SERDUSZKA PO KLIKNIĘCIU */
+    document.addEventListener("click", (e) => {
+        for (let i = 0; i < 5; i++) {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = "❤️";
+            heart.style.left = e.clientX + Math.random()*20 - 10 + "px";
+            heart.style.top = e.clientY + "px";
+            document.body.appendChild(heart);
 
-        setTimeout(() => heart.remove(), 1500);
+            setTimeout(() => heart.remove(), 1500);
+        }
+
+        easterClicks++;
+        if (easterClicks === 15) {
+            alert("💌 Tajna wiadomość: Od 3 września 2025 wszystko ma sens ❤️");
+        }
+    });
+
+    /* KLIKNIĘCIE TAK */
+    yes.addEventListener("click", () => {
+        loveScreen.style.display = "flex";
+    });
+
+    /* LICZNIK – 3 WRZEŚNIA 2025 */
+    const startDate = new Date(2025, 8, 3); // wrzesień = 8
+
+    function updateCounter() {
+        const now = new Date();
+        const diff = startDate - now;
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+        if (days > 0) {
+            counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
+        } else {
+            counter.innerText = `Jesteśmy razem od ${Math.abs(days)} dni ❤️`;
+        }
     }
 
-    easterClicks++;
-    if (easterClicks === 15) {
-        alert("💌 Tajna wiadomość: Od 3 września 2025 wszystko ma sens ❤️");
-    }
-});
-
-/* KLIKNIĘCIE TAK */
-yes.addEventListener("click", () => {
-    loveScreen.style.display = "flex";
-});
-
-const startDate = new Date(2025, 8, 3);
-const today = new Date();
-
-const days = Math.round((startDate - today) / (1000 * 60 * 60 * 24));
-counter.innerText = `Do naszego dnia zostało 162 dni ❤️`;
-}
-
-updateCounter();
-setInterval(updateCounter, 60000);
+    updateCounter();
+    setInterval(updateCounter, 60000); // aktualizacja co minutę
+};
 </script>
 
 </body>
 </html>
+
 
