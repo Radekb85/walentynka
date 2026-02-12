@@ -206,19 +206,11 @@ yes.addEventListener("click", () => {
     loveScreen.style.display = "flex";
 });
 
-const startDate = new Date(2025, 8, 3); // 8 = wrzesień (miesiące liczone od 0)
+const startDate = new Date(2025, 8, 3);
+const today = new Date();
 
-function updateCounter() {
-    const now = new Date();
-    const diff = startDate - now;
-
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-    if (days > 0) {
-        counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
-    } else {
-        counter.innerText = `Jesteśmy razem od ${Math.abs(days)} dni ❤️`;
-    }
+const days = Math.round((startDate - today) / (1000 * 60 * 60 * 24));
+counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
 }
 
 updateCounter();
@@ -227,6 +219,7 @@ setInterval(updateCounter, 60000);
 
 </body>
 </html>
+
 
 
 
