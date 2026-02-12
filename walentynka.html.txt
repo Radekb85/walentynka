@@ -208,7 +208,7 @@ window.onload = function() {
     });
 
     /* LICZNIK – 3 WRZEŚNIA 2025 */
-    const startDate = new Date(2025, 8, 3); // wrzesień = 8
+    const startDate = new Date(2024, 8, 3); // wrzesień = 8
 
     function updateCounter() {
         const now = new Date();
@@ -229,6 +229,7 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
 
