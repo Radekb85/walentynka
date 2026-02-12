@@ -200,6 +200,12 @@ document.addEventListener("click", (e) => {
         alert("💌 Tajna wiadomość: Od 3 września 2025 wszystko ma sens ❤️");
     }
 });
+
+
+/* KLIKNIĘCIE TAK */
+yes.addEventListener("click", () => {
+    loveScreen.style.display = "flex";
+});
 const counter = document.getElementById("counter");
 const startDate = new Date(2025, 8, 3); // 3 września 2025
 
@@ -219,17 +225,13 @@ window.onload = function() {
     updateCounter();
     setInterval(updateCounter, 60000); // aktualizacja co minutę
 
-/* KLIKNIĘCIE TAK */
-yes.addEventListener("click", () => {
-    loveScreen.style.display = "flex";
-});
-
 
 }
 </script>
 
 </body>
 </html>
+
 
 
 
