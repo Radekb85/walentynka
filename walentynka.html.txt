@@ -206,14 +206,19 @@ yes.addEventListener("click", () => {
     loveScreen.style.display = "flex";
 });
 
-/* LICZNIK – 3 WRZEŚNIA 2025 */
-const startDate = new Date("2025-09-03");
+const startDate = new Date(2025, 8, 3); // 8 = wrzesień (miesiące liczone od 0)
 
 function updateCounter() {
     const now = new Date();
-    const diff = now - startDate;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    counter.innerText = `Jesteśmy razem od ${days} dni ❤️`;
+    const diff = startDate - now;
+
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (days > 0) {
+        counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
+    } else {
+        counter.innerText = `Jesteśmy razem od ${Math.abs(days)} dni ❤️`;
+    }
 }
 
 updateCounter();
@@ -222,6 +227,7 @@ setInterval(updateCounter, 60000);
 
 </body>
 </html>
+
 
 
 
