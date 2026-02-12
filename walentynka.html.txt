@@ -206,11 +206,18 @@ yes.addEventListener("click", () => {
     loveScreen.style.display = "flex";
 });
 
-const startDate = new Date(2025, 8, 3);
-const today = new Date();
+const startDate = new Date(2025, 8, 3); // 3 września 2025
 
-const days = Math.round((startDate - today) / (1000 * 60 * 60 * 24));
-counter.innerText = `Do naszego dnia zostało 162 dni ❤️`;
+function updateCounter() {
+    const now = new Date();
+    const diff = startDate - now;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (days > 0) {
+        counter.innerText = `Do naszego dnia zostało ${days} dni ❤️`;
+    } else {
+        counter.innerText = `Jesteśmy razem od ${Math.abs(days)} dni ❤️`;
+    }
 }
 
 updateCounter();
@@ -219,6 +226,7 @@ setInterval(updateCounter, 60000);
 
 </body>
 </html>
+
 
 
 
