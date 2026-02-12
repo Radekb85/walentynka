@@ -198,7 +198,7 @@ window.onload = function() {
 
         easterClicks++;
         if (easterClicks === 15) {
-            alert("💌 Tajna wiadomość: Od 3 września 2025 wszystko ma sens ❤️");
+            alert("💌 Tajna wiadomość: Od 3 września 2024 wszystko ma sens ❤️");
         }
     });
 
@@ -229,6 +229,7 @@ window.onload = function() {
 
 </body>
 </html>
+
 
 
 
